@@ -132,4 +132,48 @@ class DataFixtures
         ['content'=>"Merci pour ce guide.\n\nIl va m'aider pour mes projets.","status"=>CommentStatus::WAITING,"userIndex"=>9,"postIndex"=>1],
         // Ajouter de manière similaire pour tous les posts jusqu’à ce que chaque post ait 5+ commentaires
     ];
+
+    public const CATEGORIES = [
+        [
+            'name' => 'Technologie',
+            'description' => "Toutes les dernières innovations technologiques, gadgets, logiciels et matériel informatique. Découvrez comment la technologie transforme notre quotidien et les tendances à venir dans le monde du numérique. Articles détaillés, tests produits, comparatifs, conseils pour les professionnels et les passionnés de high-tech.",
+        ],
+        [
+            'name' => 'Développement Web',
+            'description' => "Articles et tutoriels sur le développement web moderne : HTML, CSS, JavaScript, PHP, Symfony, React, et bien plus. Astuces, bonnes pratiques et retours d’expérience pour débutants et experts qui souhaitent améliorer leurs compétences et rester à jour sur les nouvelles technologies.",
+        ],
+        [
+            'name' => 'Science & Futur',
+            'description' => "Découvertes scientifiques, innovations, space-tech et recherches de pointe. Explorez les articles sur l’intelligence artificielle, la robotique, les nouvelles sources d’énergie et l’exploration spatiale. Contenu riche et détaillé pour comprendre l’impact des sciences sur notre futur.",
+        ],
+        [
+            'name' => 'Societé & Culture',
+            'description' => "Discussions, analyses et articles sur la société moderne, la culture et les comportements humains. Des textes approfondis sur la sociologie, les tendances culturelles, les mouvements artistiques et les enjeux sociaux contemporains.",
+        ],
+        [
+            'name' => 'Emploi & Carrière',
+            'description' => "Conseils pour la recherche d’emploi, le développement professionnel et la gestion de carrière. Guides pratiques sur la rédaction de CV, la préparation aux entretiens, les tendances du marché du travail et le développement personnel pour progresser dans votre carrière.",
+        ],
+        [
+            'name' => 'Lifestyle & Bien-être',
+            'description' => "Articles sur la santé, le bien-être, la nutrition, la productivité et le développement personnel. Conseils pratiques pour améliorer votre quotidien, gérer le stress, adopter des habitudes saines et trouver un équilibre entre vie professionnelle et personnelle.",
+        ],
+        [
+            'name' => 'Voyage & Aventure',
+            'description' => "Récits de voyages, guides pratiques et conseils pour découvrir le monde. Des destinations exotiques aux escapades locales, trouvez des inspirations pour vos prochaines aventures et profitez d’anecdotes et d’astuces pour voyager malin.",
+        ],
+        [
+            'name' => 'Finance & Economie',
+            'description' => "Analyses financières, conseils en investissement et tendances économiques. Comprendre le fonctionnement des marchés, gérer son budget et découvrir des stratégies pour la croissance personnelle et professionnelle.",
+        ],
+        [
+            'name' => 'Arts & Divertissement',
+            'description' => "Tout sur la musique, le cinéma, la littérature et les arts visuels. Critiques, interviews, tendances et analyses approfondies pour les passionnés d’art et de culture, ainsi que des recommandations pour découvrir de nouvelles œuvres.",
+        ],
+        [
+            'name' => 'Sport & Fitness',
+            'description' => "Articles sur le sport, la remise en forme et la performance physique. Programmes d’entraînement, conseils nutritionnels, interviews d’athlètes et analyses sur les compétitions pour rester motivé et atteindre vos objectifs sportifs.",
+        ],
+    ];
+
 }
