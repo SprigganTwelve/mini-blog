@@ -203,8 +203,6 @@
                     <th scope="col" class="email-col">email</th>
                     <th scope="col" class="activated-col">activated</th>
                     <th scope="col" class="date-col">createdAt</th>
-                    <th scope"col" class="edit-col"></th>
-                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -217,7 +215,7 @@
                         <td class='name'> {{[ user.firstName, user.lastName ] | join(' ')}} </td>
 
                         <td class="email">
-                           <span >{{email}}</a>
+                           <span >{{user.email}}</a>
                         </td>
 
                         <td class="activated">
@@ -236,22 +234,11 @@
                         </td>
 
                         <td class="create-date-txt">
-                            {{ post.createdAt | date('d/m/Y H:i') }}
+                            {{ user.createdAt | date('d/m/Y H:i') }}
                         </td>
 
   
 
-                        <td>
-                            <form
-                                method="post"
-                                action="{{ path('post_delete', {id: post.id}) }}"
-                                onsubmit="return confirm('Are you sure?');"
-                                style="display:inline"
-                            >
-                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ post.id) }}">
-                                <button class="btn btn-link p-0">delete</button>
-                            </form>
-                        </td>
                         
                     </tr>
                 {% endfor %}

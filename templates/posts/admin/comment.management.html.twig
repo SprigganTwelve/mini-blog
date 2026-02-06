@@ -224,7 +224,7 @@
                                         onsubmit="return confirm('Are you sure? This will suppress all the posts associated to it');"
                                         style="display:inline"
                                     >
-                                        <input type="hidden" name="_token" value="{{ csrf_token('approve' ~ category.id) }}">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('approve' ~ comment.id) }}">
                                         <button class="btn btn-link p-0">approve</button>
                                     </form>
                                 {% else %}
@@ -234,7 +234,7 @@
                                         onsubmit="return confirm('Are you sure? This will suppress all the posts associated to it');"
                                         style="display:inline"
                                     >
-                                        <input type="hidden" name="_token" value="{{ csrf_token('disapprove' ~ category.id) }}">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('disapprove' ~ comment.id) }}">
                                         <button class="btn btn-link p-0">Disapprove</button>
                                     </form>
                                 {% endif %}
