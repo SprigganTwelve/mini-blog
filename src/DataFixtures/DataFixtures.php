@@ -9,6 +9,15 @@ use App\Enums\UserRoles;
 class DataFixtures
 {
     public const USERS = [
+        [
+            'email' => 'admin@gmail.com',
+            'password' => 'admin123',
+            'role' => UserRoles::ADMIN,
+            'activated' => true,
+            'firstName' => 'Jean',
+            'lastName' => 'Dupont',
+            'profilePicture' => 'https://randomuser.me/api/portraits/men/45.jpg',
+        ],
         ['email'=>'user1@gmail.com','password'=>'user123','role'=>UserRoles::USER,'activated'=>true,'firstName'=>'Alice','lastName'=>'Martin','profilePicture'=>'https://randomuser.me/api/portraits/women/68.jpg'],
         ['email'=>'user2@gmail.com','password'=>'user123','role'=>UserRoles::USER,'activated'=>true,'firstName'=>'Marc','lastName'=>'Durand','profilePicture'=>null],
         ['email'=>'user3@gmail.com','password'=>'user123','role'=>UserRoles::USER,'activated'=>true,'firstName'=>'Emilie','lastName'=>'Leclerc','profilePicture'=>'https://randomuser.me/api/portraits/women/25.jpg'],

@@ -35,7 +35,6 @@ class PostType extends AbstractType
             ->add('slug', null, [
                 'constraints' => [
                     new Assert\NotBlank(),
-                    new Assert\Length(min: 5, max: 64)
                 ]
             ])
             ->add('picture')

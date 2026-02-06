@@ -31,8 +31,7 @@ class Post
     private ?string $content = null;
 
     #[Assert\NotBlank(message: "Le sulg ne peut pas être vide")]
-    #[Assert\Length(min: 10, max: 64)]
-    #[ORM\Column(length: 25)]
+    #[ORM\Column(length: 255)]
     private ?string $slug = null;
 
     #[ORM\Column(length: 255, nullable: true)]

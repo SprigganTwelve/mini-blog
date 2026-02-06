@@ -40,6 +40,9 @@ class AppFixtures extends Fixture
                 ->setCreatedAt($date)
                 ->setUpdatedAt($date);
 
+            if($data['activated'] ){
+                    $user->setActivated($data['activated']);
+            }
             $manager->persist($user);
             $this->addReference("user_$i", $user);
 
@@ -69,9 +72,7 @@ class AppFixtures extends Fixture
             if($data['categoryIndex'] ){
                     $post->setCategory($this->getReference( "category_".$data['categoryIndex'],Category::class));
             }
-            if($data['activated'] ){
-                    $post->setCategory($data['activated']);
-            }
+
 
             // relation métier : Category -> Posts
             $category->addPost($post);
