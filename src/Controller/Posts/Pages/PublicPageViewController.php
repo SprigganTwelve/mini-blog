@@ -63,7 +63,7 @@ class PublicPageViewController extends AbstractController
         $form = $this->createForm(CommentType::class, $newComment);
         $form->handleRequest($request);
 
-        if($user && $form->isSubmitted() && $form->isValid() && $request->request->has("")){
+        if($user && $form->isSubmitted() && $form->isValid() && $request->request->has("comment_send")){
             $newComment->setStatus(CommentStatus::WAITING);
             $newComment->setPost($post);
             $newComment->setUser($user);
