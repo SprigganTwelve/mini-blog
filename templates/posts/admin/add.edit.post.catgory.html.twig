@@ -1,0 +1,135 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Create Post!{% endblock %}
+
+{% block stylesheets %}
+<style>
+.container {
+    max-width: 900px;
+    display: flex;
+    gap: 15px;
+    transform: translate(70px)
+}
+.btn-section {
+    width: 100%;
+    display: flex;
+    gap: 20px;
+    justify-content: flex-end;
+    padding: 1rem 0;
+}
+.form-section {
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 0 10px rgba(0,0,0,.05);
+    margin-bottom: 2rem;
+}
+.form-category {
+    height: fit-content;
+}
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="container">
+
+    <!-- ================= POST FORM ================= -->
+    <div class="form-section">
+        {{ form_start(postForm, { attr: { novalidate: 'novalidate' } }) }}
+
+        <!-- Title -->
+        <div class="mb-3">
+            <label for="post_title" class="form-label">Title</label>
+            {{ form_widget(
+                postForm.title, {attr: { id: 'post_title', class: 'form-control', placeholder: postForm.title.vars.value | default('Your title') } })
+            }}
+            {{ form_errors(postForm.title) }}
+        </div>
+
+        <!-- ================= Categories (display only) ================= -->
+        <div class="mb-3">
+            <label class="form-label">Category</label>
+            <div class="input-group">
+                {{ form_widget(postForm.category, {
+                                    attr: { 
+                                        id:"category-display",
+                                        class: "form-control category-display",
+                                    }
+                    })
+                }}
+                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Categories
+                </button>
+                {{ form_errors(postForm.category) }}
+            </div>
+        </div>
+
+
+
+        <!-- Picture, Content, isPublished, Slug -->
+        <div class="mb-3">
+            <label for="post_picture" class="form-label">Your Image URL</label>
+            <div class="input-group">
+                <span class="input-group-text">https://</span>
+                {{ form_widget(postForm.picture, { attr: { id: 'post_picture', class: 'form-control', placeholder: postForm.picture.vars.value | default("Insert an image http link") } }) }}
+            </div>
+            {{ form_errors(postForm.picture) }}
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Content</label>
+            {{ form_widget(postForm.content, { attr: { class: 'form-control', rows: 6, placeholder: "Please, write content here!!" } }) }}
+            {{ form_errors(postForm.content) }}
+        </div>
+
+        <div class="form-check mb-3">
+            {{ form_widget(postForm.isPublished, { attr: { class: 'form-check-input', check: postForm.isPublished.vars.value } }) }}
+            {{ form_label(postForm.isPublished, null, { label_attr: { class: 'form-check-label' } }) }}
+        </div>
+
+        <!-- Slug -->
+        <div class="form-group">
+            <label>Slug</label>
+            {{ form_widget(postForm.slug, { attr:{ class:'form-control', placeholder: postForm.slug.vars.value | default("Here please write") } }) }}
+            {{ form_errors(postForm.slug) }}
+        </div>
+
+        <div class="btn-section">
+            <button type="reset" class="btn btn-outline-warning" onclick="window.location.href='{{ path('posts_management') }}'">Cancel</button>
+            <button type="submit" name="post_submit" class="btn btn-outline-success">{{ button_label | default('Save') }}</button>
+        </div>
+
+        {{ form_end(postForm) }}
+    </div>
+
+    <!-- ================= CATEGORY FORM ================= -->
+    <div class="form-section form-category">
+        <h5 class="mb-3">Create Category</h5>
+        {{ form_start(categoryForm, { attr: { novalidate: 'novalidate' } }) }}
+
+        <div class="mb-3">
+            {{ form_label(categoryForm.name, null, { label_attr: { class: 'form-label' } }) }}
+            {{ form_widget(categoryForm.name, { attr: { class: 'form-control' } }) }}
+            {{ form_errors(categoryForm.name) }}
+        </div>
+
+        <div class="input-group">
+            <span class="input-group-text">Description</span>
+            {{ form_widget(categoryForm.description, { attr:{ class: "form-control" } }) }}
+            {{ form_errors(categoryForm.description) }}
+        </div>
+
+        <div class="btn-section">
+            <button name="category_submit" class="btn btn-primary">{{ button_label | default('Save') }}</button>
+        </div>
+
+        {{ form_end(categoryForm) }}
+    </div>
+</div>
+{% endblock %}
+
+
+{% block javascripts %}
+<script>
+
+</script>
+{% endblock %}

@@ -1,0 +1,186 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} View post {% endblock %}
+
+{% block stylesheets %}
+<style>
+    .container {
+        max-width: 900px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+    }
+
+    .wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .image-section {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        background: #f8f9fa;
+        border-radius: 8px;
+        padding: 1rem;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+
+    .image-section img {
+        width: 100%;
+        max-height: 400px;
+        object-fit: cover;
+        border-radius: 8px;
+    }
+
+    .details-section {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    .details-section .title {
+        margin: 0;
+        font-size: 2rem;
+        font-weight: 600;
+    }
+
+    .details-section .category {
+        font-size: 0.9rem;
+        color: #6c757d;
+    }
+
+    .details-section .options a {
+        margin-left: 1rem;
+        text-decoration: none;
+        color: #0d6efd;
+    }
+
+    .details-section .options a:hover {
+        text-decoration: underline;
+    }
+
+    .content-section {
+        font-size: 1rem;
+        line-height: 1.6;
+    }
+
+    .comment-section {
+        margin-top: 2rem;
+    }
+
+    .comment-section .input-section {
+        margin-bottom: 1.5rem;
+    }
+
+    .comment-section .item-section .comment-user-image {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .comment-section .item-section img {
+        width: 40px;
+        height: 40px;
+        object-fit: cover;
+        border-radius: 50%;
+    }
+
+    .comment-section .item-section div {
+        margin-bottom: 1rem;
+        padding: 0.5rem;
+        background: #f1f3f5;
+        border-radius: 6px;
+    }
+
+    .comment-section .item-section p {
+        margin: 0.3rem 0 0 0;
+    }
+
+    .comment-section .item-section div div {
+        font-size: 0.8rem;
+        color: #6c757d;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+
+<div class="container">
+    <div class="wrapper">
+
+        <!-- Post Image and Details -->
+        <div class="image-section">
+            <img src="{{ post.picture | default('https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg') }}" alt="Post image">
+            <div class="details-section">
+                <div>
+                    <h1 class="title">{{ post.title | nl2br }}</h1>
+                    <div class="category">{{ post.category?.name }}</div>
+                </div>
+                {% if role is not empty %}
+                    <div class='options'>
+                        <a href="{{ path('page_post_edit', {id: post.id }) }}">Edit</a>
+                        <a href="{{ path('post_delete', {id: post.id }) }}">Delete</a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Post Content -->
+        <div class="content-section">
+            <p>{{ post.content }} | nl2br </p>
+        </div>
+
+        {% if role is not empty %}
+        <!-- Comments Section -->
+        <div class="comment-section">
+
+            <!-- Add Comment Form -->
+            <div class="input-section"> <!-- Only for user -->
+                {% if role is not empty   %} 
+                    {{ form_start(commentForm, { attr: { novalidate: 'novalidate' } }) }}
+                        <div class="input-group mb-3">
+                            {{ form_widget(commentForm.content, {
+                                attr: {
+                                    class: "form-control",
+                                    placeholder: "Enter a comment here",
+                                    ariaLabel: "Enter a comment here",
+                                    ariaDescribedby: "basic-addon2"
+                                }
+                            }) }}
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary">Send</button>
+                            </div>
+                        </div>
+                    {{ form_end(commentForm) }}
+                {% endif %}
+            </div>
+
+            <!-- Display Comments - public -->
+            <div class="item-section">
+                {% if comments is not empty %}
+                    {% for comment in comments %}
+                        <div>
+                            <div class="comment-user-image">
+                                <img
+                                    alt="image"
+                                    src="{{ comment.user.profilePicture | default('https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg') }}"
+                                />
+                                <span>{{ [comment.user.firstName, comment.user.lastName] | join(' ') }}</span>
+                            </div>
+                            <p>{{ comment.content }}</p>
+                            <div>Written at {{ comment.createdAt | date('d/m/Y H:i') }}</div>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+        </div>
+        {% endif %}
+
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,161 @@
+{% extends 'base.html.twig' %}
+
+
+{% block stylesheets %}
+<style>
+  :root {
+    --bg: #f8fafc;
+    --card-bg: #ffffff;
+    --border: #e5e7eb;
+    --text-main: #0f172a;
+    --text-muted: #64748b;
+    --primary: #4f46e5;
+    --radius: 14px;
+    --shadow-soft: 0 8px 24px rgba(15, 23, 42, 0.08);
+    --shadow-strong: 0 18px 45px rgba(15, 23, 42, 0.15);
+  }
+
+  body {
+    background: var(--bg);
+    font-family: Inter, -apple-system, BlinkMacSystemFont,
+      "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: var(--text-main);
+  }
+
+  /* Container */
+  .form-section.form-category {
+    max-width: 520px;
+    margin: 4rem auto;
+    padding: 2rem 2.2rem;
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-soft);
+    animation: fadeUp .6s ease both;
+  }
+
+  /* Title */
+  .form-section h5 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin-bottom: 1.5rem;
+  }
+
+  /* Labels */
+  .form-label {
+    font-size: .8rem;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: var(--text-muted);
+    margin-bottom: .35rem;
+  }
+
+  /* Inputs */
+  .form-control {
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    padding: .65rem .85rem;
+    font-size: .95rem;
+    transition:
+      border-color .2s ease,
+      box-shadow .2s ease;
+  }
+
+  .form-control:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, .15);
+  }
+
+  /* Input group */
+  .input-group-text {
+    background: #f8fafc;
+    border: 1px solid var(--border);
+    border-right: none;
+    font-size: .85rem;
+    color: var(--text-muted);
+  }
+
+  .input-group .form-control {
+    border-left: none;
+  }
+
+  /* Errors */
+  .form-error-message,
+  .invalid-feedback {
+    font-size: .8rem;
+    color: #dc2626;
+    margin-top: .25rem;
+  }
+
+  /* Button section */
+  .btn-section {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1.75rem;
+  }
+
+  .btn-section .btn {
+    border-radius: 999px;
+    padding: .45rem 1.4rem;
+    font-size: .85rem;
+    font-weight: 500;
+    transition:
+      transform .15s ease,
+      box-shadow .15s ease;
+  }
+
+  .btn-section .btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(0,0,0,.15);
+  }
+
+  /* Animation */
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(18px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Responsive */
+  @media (max-width: 576px) {
+    .form-section.form-category {
+      margin: 2rem 1rem;
+      padding: 1.5rem;
+    }
+  }
+</style>
+{% endblock %}
+
+
+{% block body %}
+
+<!-- ================= CATEGORY FORM ================= -->
+<div class="form-section form-category">
+        <h5 class="mb-3">Update Category</h5>
+        {{ form_start(categoryForm, { attr: { novalidate: 'novalidate' } }) }}
+
+        <div class="mb-3">
+            {{ form_label(categoryForm.name, null, { label_attr: { class: 'form-label' } }) }}
+            {{ form_widget(categoryForm.name, { attr: { class: 'form-control' } }) }}
+            {{ form_errors(categoryForm.name) }}
+        </div>
+
+        <div class="input-group">
+            <span class="input-group-text">Description</span>
+            {{ form_widget(categoryForm.description, { attr:{ class: "form-control" } }) }}
+            {{ form_errors(categoryForm.description) }}
+        </div>
+
+        <div class="btn-section">
+            <button name="category_submit" class="btn btn-primary">{{ button_label | default('Save') }}</button>
+        </div>
+
+        {{ form_end(categoryForm) }}
+</div>
+
+{% endblock %}

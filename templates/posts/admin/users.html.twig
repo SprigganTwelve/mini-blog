@@ -1,0 +1,262 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Admin posts {% endblock %}
+
+{% block stylesheets %}
+<style>
+  :root {
+    --bg: #f8fafc;
+    --card-bg: #ffffff;
+    --border: #e5e7eb;
+    --text-main: #0f172a;
+    --text-muted: #64748b;
+    --primary: #4f46e5;
+    --danger: #dc2626;
+    --success: #16a34a;
+    --radius: 14px;
+    --shadow-soft: 0 8px 24px rgba(15, 23, 42, 0.08);
+  }
+
+  body {
+    background: var(--bg);
+    font-family: Inter, -apple-system, BlinkMacSystemFont,
+      "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: var(--text-main);
+  }
+
+  /* Container */
+  .container {
+    padding: 2.5rem 1rem;
+  }
+
+  .wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-soft);
+    padding: 1.75rem;
+    animation: fadeUp .5s ease both;
+  }
+
+  /* Header */
+  .wrapper > div:first-child {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.25rem;
+  }
+
+  .wrapper h1 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin: 0;
+  }
+
+  .wrapper a {
+    font-size: .85rem;
+    font-weight: 500;
+    padding: .4rem 1rem;
+    border-radius: 999px;
+    text-decoration: none;
+    color: white;
+    background: var(--primary);
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+
+  .wrapper a:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(79,70,229,.35);
+  }
+
+  /* Table */
+  .table {
+    margin-top: 1rem;
+    border-collapse: separate;
+    border-spacing: 0 8px;
+  }
+
+  .table thead th {
+    font-size: .75rem;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--text-muted);
+    border: none;
+  }
+
+  .table tbody tr {
+    background: #ffffff;
+    border-radius: 10px;
+    transition:
+      transform .15s ease,
+      box-shadow .15s ease;
+  }
+
+  .table tbody tr:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(0,0,0,.08);
+  }
+
+  .table tbody td {
+    vertical-align: middle;
+    border: none;
+    font-size: .9rem;
+  }
+
+  /* Image */
+  .img-section img {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid var(--border);
+  }
+
+  /* Name */
+  .name {
+    font-weight: 500;
+  }
+
+  /* Email */
+  .email {
+    font-size: .85rem;
+    color: var(--text-muted);
+  }
+
+  /* Activate button */
+  .activated button {
+    font-size: .75rem;
+    font-weight: 500;
+    padding: .25rem .75rem;
+    border-radius: 999px;
+    text-decoration: none;
+    transition: background-color .15s ease, color .15s ease;
+  }
+
+  .activated button:hover {
+    text-decoration: none;
+    opacity: .9;
+  }
+
+  /* Delete */
+  form button.btn-link {
+    font-size: .8rem;
+    color: var(--danger);
+    font-weight: 500;
+  }
+
+  form button.btn-link:hover {
+    text-decoration: underline;
+  }
+
+  /* Date */
+  .create-date-txt {
+    font-size: .8rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+
+  /* Animation */
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(15px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .wrapper {
+      padding: 1.25rem;
+    }
+
+    .wrapper > div:first-child {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: .75rem;
+    }
+  }
+</style>
+{% endblock %}
+
+
+
+
+{% block body %}
+<div class='container'>
+    <div class= "wrapper">
+        <div>
+            <h1>Post Manager</h1>
+            <a href="{{ path('page_post_add') }}">+ Add new</a>
+        </div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col" class="iid-col">#</th>
+                    <th scope="col" class="img-col"></th>
+                    <th scope="col" class="name-col">name</th>
+                    <th scope="col" class="email-col">email</th>
+                    <th scope="col" class="activated-col">activated</th>
+                    <th scope="col" class="date-col">createdAt</th>
+                    <th scope"col" class="edit-col"></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td scope="row">{{user.id}}</td>
+
+                        <td class='img-section'><img src="{{ user.profilePicture | default('https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg')  }}"/></td>
+
+                        <td class='name'> {{[ user.firstName, user.lastName ] | join(' ')}} </td>
+
+                        <td class="email">
+                           <span >{{email}}</a>
+                        </td>
+
+                        <td class="activated">
+                            <form
+                                method="post"
+                                action="{{ path('user_toggle_activate', {id: user.id}) }}"
+                                style="display:inline"
+                            >
+                                <input type="hidden" name="_token" value="{{ csrf_token('activate' ~ user.id) }}">
+                                <button class="btn btn-link p-0">{{ user.activated ? "Deactivate" : "Activate" }}</button>
+                            </form>
+                        </td>
+
+                        <td class="publish-btn">
+
+                        </td>
+
+                        <td class="create-date-txt">
+                            {{ post.createdAt | date('d/m/Y H:i') }}
+                        </td>
+
+  
+
+                        <td>
+                            <form
+                                method="post"
+                                action="{{ path('post_delete', {id: post.id}) }}"
+                                onsubmit="return confirm('Are you sure?');"
+                                style="display:inline"
+                            >
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ post.id) }}">
+                                <button class="btn btn-link p-0">delete</button>
+                            </form>
+                        </td>
+                        
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

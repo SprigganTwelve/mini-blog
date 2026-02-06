@@ -1,0 +1,214 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Admin categories {% endblock %}
+
+{% block stylesheets %}
+<style>
+  :root {
+    --bg: #f8fafc;
+    --card-bg: #ffffff;
+    --border: #e5e7eb;
+    --text-main: #0f172a;
+    --text-muted: #64748b;
+    --primary: #4f46e5;
+    --danger: #dc2626;
+    --radius: 12px;
+    --shadow-soft: 0 6px 20px rgba(15, 23, 42, 0.08);
+    --shadow-strong: 0 14px 40px rgba(15, 23, 42, 0.15);
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text-main);
+    font-family: Inter, -apple-system, BlinkMacSystemFont,
+      "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+
+  /* Wrapper */
+  .container {
+    padding: 3rem 1rem;
+  }
+
+  .wrapper {
+    max-width: 860px;
+    margin: 0 auto;
+    animation: fadeUp .6s ease both;
+  }
+
+  /* Card */
+  .card {
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-soft);
+    overflow: hidden;
+    background: var(--card-bg);
+  }
+
+  .card-header {
+    background: linear-gradient(180deg, #ffffff, #f8fafc);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* Table */
+  .admin-table {
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+
+  .admin-table thead th {
+    font-size: .75rem;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border);
+    background: #f8fafc;
+  }
+
+  .admin-table th,
+  .admin-table td {
+    padding: .9rem 1.1rem;
+    vertical-align: middle;
+  }
+
+  /* ID column */
+  .iid-col {
+    width: 80px;
+    font-size: .85rem;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+
+  /* Name */
+  .name {
+    font-weight: 500;
+    color: var(--text-main);
+  }
+
+  /* Rows */
+  .clickable-row {
+    cursor: pointer;
+    transition:
+      background-color .25s ease,
+      transform .2s ease;
+  }
+
+  .clickable-row:hover {
+    background-color: #f1f5f9 !important;
+    transform: translateX(2px);
+  }
+
+  /* Actions */
+  .admin-table a {
+    font-size: .8rem;
+    font-weight: 500;
+    color: var(--primary);
+    text-decoration: none;
+    position: relative;
+  }
+
+  .admin-table a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 0;
+    height: 1px;
+    background: currentColor;
+    transition: width .25s ease;
+  }
+
+  .admin-table a:hover::after {
+    width: 100%;
+  }
+
+  .admin-table .btn-link {
+    font-size: .8rem;
+    color: var(--danger);
+    text-decoration: none;
+    padding: 0;
+  }
+
+  .admin-table .btn-link:hover {
+    text-decoration: underline;
+  }
+
+  /* Animations */
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(15px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Responsive */
+  @media (max-width: 640px) {
+    .admin-table th,
+    .admin-table td {
+      padding: .7rem .8rem;
+    }
+  }
+</style>
+{% endblock %}
+
+
+{% block body %}
+
+<div class="container my-5">
+    <div class="wrapper">
+        <div class="card shadow-sm">
+            <div class="card-header bg-light fw-semibold">
+                Categories
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-hover table-striped align-middle mb-0 admin-table">
+                    <thead class="table-secondary">
+                        <tr>
+                            <th scope="col" class="iid-col">id</th>
+                            <th scope="col" class="title-col">Name</th>
+                            <th></th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for category in categories %}
+                            <tr scope="row">{{ category.id }}</tr>
+                            <tr class="clickable-row"
+                                onclick="window.location.href='{{ path('posts_management') }}'">
+                                <td class="name">{{ category.name }}</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a href="{{ path('page_category_edit', {id: category.id}) }}">edit</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <form
+                                        method="post"
+                                        action="{{ path('delete_categpory', {id: category.id}) }}"
+                                        onsubmit="return confirm('Are you sure? This will suppress all the posts associated to it');"
+                                        style="display:inline"
+                                    >
+                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ category.id) }}">
+                                        <button class="btn btn-link p-0">delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

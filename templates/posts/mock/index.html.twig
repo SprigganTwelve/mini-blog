@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}POSTS !{% endblock %}
+
+{% block body %}
+    <div 
+        class="row"
+    >
+    {% set id = 1 %}
+    {% for post in posts %}
+        {% set id = id +1 %}
+        <div
+            class="col-sm-6"
+        >
+            <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{post.title}}</h5>
+                <p class="card-text">{{post.content}}.</p>
+                <button
+                    class="btn btn-primary"
+                    onclick="window.location.href='{{ path('post_single', {id} ) }}'"
+                >
+                    See more!
+                </button>
+            </div>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+{% endblock %}
